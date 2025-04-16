@@ -1,4 +1,4 @@
-<%--
+<%@ page import="org.example.servletcrudapp.model.User" %><%--
   Created by IntelliJ IDEA.
   User: Asiri
   Date: 4/11/2025
@@ -21,6 +21,12 @@
         response.sendRedirect("login.jsp");
     }
 %>
+
+
+<p>User Name:<%= ((User) request.getAttribute("userData")).getUsername() %></p>
+<p>Email:<%= ((User) request.getAttribute("userData")).getEmail()%></p>
+<p>Mobile Number:<%= ((User) request.getAttribute("userData")).getMobile()%></p>
+
 <form action = "logout">
     <input type = "submit" value="Logout">
 </form>

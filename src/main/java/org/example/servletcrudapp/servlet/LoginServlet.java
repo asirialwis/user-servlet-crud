@@ -21,8 +21,8 @@ public class LoginServlet extends HttpServlet {
         boolean isAuthenticated = dao.authenticateUser(email , password);
         if (isAuthenticated) {
             HttpSession session = request.getSession();
-            session.setAttribute("user", email);
-            response.sendRedirect("user-list.jsp");
+            session.setAttribute("user", email);    //store email in the session
+            response.sendRedirect("profile");   //Navigate to the profile servlet
         }
         else{
             response.sendRedirect("login.jsp?error=invalid");

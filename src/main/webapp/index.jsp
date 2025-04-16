@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JSP - Hello Asiri</title>
+    <title>Home</title>
 </head>
 <body>
 <h1><%= "Welcome To User Management System!" %>

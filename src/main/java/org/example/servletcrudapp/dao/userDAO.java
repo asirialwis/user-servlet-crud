@@ -12,6 +12,7 @@ public class userDAO {
 
     private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password) VALUES (?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT * FROM users WHERE email=? AND password=?";
+    private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
 
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
@@ -40,5 +41,27 @@ public class userDAO {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public User getUserByEmail(String email){
+        try (Connection connection = dbUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_SQL)) {
+
+            preparedStatement.setString(1, email);
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next()){
+                String username = rs.getString("username");
+                String password = rs.getString("password");
+                int mobile = rs.getInt("mobile");
+                return new User(username,email,mobile,password);
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
