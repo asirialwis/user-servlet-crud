@@ -24,8 +24,7 @@ public class AddUserServlet extends HttpServlet {
 
 
         try {
-            response.setContentType("text/html");
-            response.getWriter().println("<h2>User Registered Successfully</h2>");
+            response.sendRedirect("login.jsp");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
