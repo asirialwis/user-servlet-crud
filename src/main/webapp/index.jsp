@@ -8,13 +8,13 @@
     <title>JSP - Hello Asiri</title>
 </head>
 <body>
-<h1><%= "Hello Asiri!" %>
+<h1><%= "Welcome To User Management System!" %>
 </h1>
 <br/>
 
 <%! Date date = new Date(); %>
 <%! String text = "The current date and time is "; %>
 
-<a href="hello-servlet">Hello Servlet</a>
+<a href="register.jsp">Register ro system</a>
 </body>
 </html>

@@ -21,6 +21,10 @@
 
     <input type="submit" value="Login">
 
+    <p>Dont have an account?
+        <a href="register.jsp">Register</a>
+    </p>
+
 </form>
 </body>
 </html>
