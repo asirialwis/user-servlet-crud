@@ -20,6 +20,9 @@
     <label for="email">Email:</label>
     <input type="email" id="email" name="email" required><br><br>
 
+    <label for="email">Mobile:</label>
+    <input type="text" id="mobile" name="mobile" required><br><br>
+
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
 

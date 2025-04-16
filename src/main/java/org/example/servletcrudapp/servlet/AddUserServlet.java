@@ -16,9 +16,10 @@ public class AddUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response){
         String username  = request.getParameter("username");
         String email = request.getParameter("email");
+        int mobile = Integer.parseInt(request.getParameter("mobile"));
         String password = request.getParameter("password");
 
-        User user = new User(username, password, email);
+        User user = new User(username,email ,mobile,password);
         dao.insertUser(user);
 
 
