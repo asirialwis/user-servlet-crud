@@ -1,10 +1,7 @@
 package org.example.servletcrudapp.servlet;
 
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
@@ -16,6 +13,11 @@ public class LogoutServlet extends HttpServlet {
         if(session != null){
             session.invalidate();
         }
+
+        Cookie cookie = new Cookie("remember", "");
+        cookie.setMaxAge(0); //Delete it
+        response.addCookie(cookie);
+
         response.sendRedirect("login.jsp");
     }
 }

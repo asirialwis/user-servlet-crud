@@ -19,6 +19,11 @@
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
 
+    <label>
+        <input type="checkbox" name="remember" value="true"> Remember Me
+    </label>
+
+    <br/>
     <input type="submit" value="Login">
 
     <p>Dont have an account?
