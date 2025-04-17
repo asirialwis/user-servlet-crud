@@ -13,6 +13,7 @@ public class userDAO {
     private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password) VALUES (?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT * FROM users WHERE email=? AND password=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
+    private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
 
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
@@ -24,6 +25,18 @@ public class userDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public boolean emailExists(String email)  {
+        try (Connection connection = dbUtil.getConnection();
+             PreparedStatement ps = connection.prepareStatement(CHECK_EMAIL_SQL)){
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();   //return true if email exists
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
