@@ -1,5 +1,6 @@
 package org.example.servletcrudapp.dao;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.example.servletcrudapp.model.User;
 import org.example.servletcrudapp.util.dbUtil;
 
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 public class userDAO {
 
     private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password) VALUES (?,?,?,?)";
-    private static final String AUTH_QUERY = "SELECT * FROM users WHERE email=? AND password=?";
+    private static final String AUTH_QUERY = "SELECT password FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
 
@@ -45,10 +46,13 @@ public class userDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(AUTH_QUERY)) {
 
             preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
 
             ResultSet rs = preparedStatement.executeQuery();
-            return rs.next(); // true if a matching record is found
+            if(rs.next()) {
+                String hashedPassword = rs.getString("password");
+                BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
+                return result.verified;
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();

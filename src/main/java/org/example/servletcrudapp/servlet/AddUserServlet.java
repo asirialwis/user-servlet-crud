@@ -1,5 +1,7 @@
 package org.example.servletcrudapp.servlet;
 
+
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,7 +21,9 @@ public class AddUserServlet extends HttpServlet {
         int mobile = Integer.parseInt(request.getParameter("mobile"));
         String password = request.getParameter("password");
 
-        User user = new User(username,email ,mobile,password);
+        String hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+
+        User user = new User(username,email ,mobile,hashedPassword);
 
         //Check the email exists in users table
         if(dao.emailExists(email)){
