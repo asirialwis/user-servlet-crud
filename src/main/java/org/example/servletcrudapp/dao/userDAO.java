@@ -16,6 +16,7 @@ public class userDAO {
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
     private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=? WHERE email=?";
+    private static final String DELETE_USER_SQL = "DELETE FROM users WHERE email=?";
 
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
@@ -106,8 +107,23 @@ public class userDAO {
             e.printStackTrace();
             return false;
         }
+    }
 
 
+    public boolean deleteUserByEmail(String email){
+        try(Connection connection = dbUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_SQL)){
+
+            preparedStatement.setString(1, email);
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            return rowsUpdated > 0;
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

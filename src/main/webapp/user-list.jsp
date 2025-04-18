@@ -34,5 +34,10 @@
 <form action = "logout">
     <input type = "submit" value="Logout">
 </form>
+
+<form action="delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action is irreversible.');">
+    <input type="submit" value="Delete My Account" style="background-color:red; color:white; padding:10px; border:none; border-radius:5px;">
+</form>
+
 </body>
 </html>
