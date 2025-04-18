@@ -99,8 +99,6 @@ public class userDAO {
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, user.getEmail());
 
-
-
             int rowsUpdated = preparedStatement.executeUpdate();
 
             return rowsUpdated > 0;
