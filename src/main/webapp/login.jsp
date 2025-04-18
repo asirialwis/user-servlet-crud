@@ -79,17 +79,40 @@
         a:hover {
             text-decoration: underline;
         }
+        .error {
+            color: red;
+            font-size: 13px;
+            margin-bottom: 10px;
+            display: block;
+        }
     </style>
+
+    <script>
+        function validateForm(){
+            const email = document.forms["userForm"]["email"].value.trim();
+            const password = document.forms["userForm"]["password"].value;
+            let isValid = true;
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if(!emailPattern.test(email)){
+                document.getElementById("emailError").innerText = "Invalid email Format";
+                isValid = false;
+            }
+            return isValid;
+
+        }
+    </script>
 </head>
 <body>
 <h2>Login</h2>
 
-<form name="userForm" action="login" method="POST">
+<form name="userForm" action="login" method="POST" onsubmit="return validateForm()">
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <input type="email" id="email" name="email">
+    <span class="error" id="emailError"></span>
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    <input type="password" id="password" name="password">
 
     <label>
         <input type="checkbox" name="remember" value="true"> Remember Me

@@ -15,6 +15,9 @@
 <%! Date date = new Date(); %>
 <%! String text = "The current date and time is "; %>
 
-<a href="register.jsp">Register ro system</a>
+<a href="register.jsp">Register</a>
+<a href="login.jsp"> Login </a>
+<a href="profile">Profile</a>
+
 </body>
 </html>
