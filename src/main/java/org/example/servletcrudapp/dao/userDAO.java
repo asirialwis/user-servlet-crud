@@ -15,6 +15,7 @@ public class userDAO {
     private static final String AUTH_QUERY = "SELECT password FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
+    private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=? WHERE email=?";
 
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
@@ -81,4 +82,34 @@ public class userDAO {
         }
         return null;
     }
+
+    public boolean updateUser(User user) {
+        try (Connection connection = dbUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL)) {
+
+            String password = user.getPassword();
+
+            // Only hash if it's not already hashed (assuming hashed passwords start with $2a$)
+            if (!password.startsWith("$2a$")) {
+                password = BCrypt.withDefaults().hashToString(12, password.toCharArray());
+            }
+
+            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setInt(2, user.getMobile());
+            preparedStatement.setString(3, password);
+            preparedStatement.setString(4, user.getEmail());
+
+
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+
+            return rowsUpdated > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+
+    }
+
 }

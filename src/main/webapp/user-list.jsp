@@ -27,6 +27,10 @@
 <p>Email:<%= ((User) request.getAttribute("userData")).getEmail()%></p>
 <p>Mobile Number:<%= ((User) request.getAttribute("userData")).getMobile()%></p>
 
+
+<a href="update.jsp">Update</a>
+
+
 <form action = "logout">
     <input type = "submit" value="Logout">
 </form>
