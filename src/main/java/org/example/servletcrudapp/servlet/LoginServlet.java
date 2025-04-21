@@ -29,7 +29,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             //store email in the session
-            response.sendRedirect("profile");   //Navigate to the profile servlet
+            response.sendRedirect("index.jsp");   //Navigate to the profile servlet
         }
         else{
             response.sendRedirect("login.jsp?error=invalid");

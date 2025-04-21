@@ -5,6 +5,9 @@
   Time: 10:26 AM
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ page import="org.example.servletcrudapp.model.User" %>
+<%@ include file="navbar.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,6 +16,11 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -85,38 +93,35 @@
 <%
     String userEmail = (String) session.getAttribute("user");
     if (userEmail != null) {
+        User user = (User) request.getAttribute("userData");
+        String imagePath = user.getFilePath();
 %>
 
-<%
-    User user = (User) request.getAttribute("userData");
-    String imagePath = user.getFilePath(); // e.g., "upload/slipy3s2.jpg"
-%>
-<h2>Welcome, <%= userEmail %>!</h2>
-<div class="profile-card">
+<div class="dashboard-container">
+    <h2>Welcome, <%= userEmail %>!</h2>
+    <div class="profile-card">
+        <img src="<%= imagePath %>" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;">
+        <p><strong>Username:</strong> <%= user.getUsername() %></p>
+        <p><strong>Email:</strong> <%= user.getEmail() %></p>
+        <p><strong>Mobile Number:</strong> <%= user.getMobile() %></p>
 
-    <img src="<%= imagePath %>" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;">
-    <p><strong>Username:</strong> <%= ((User) request.getAttribute("userData")).getUsername() %></p>
-    <p><strong>Email:</strong> <%= ((User) request.getAttribute("userData")).getEmail() %></p>
-    <p><strong>Mobile Number:</strong> <%= ((User) request.getAttribute("userData")).getMobile() %></p>
+        <a href="update.jsp">Update Profile</a>
 
-    <a href="update.jsp">Update Profile</a>
+        <div class="btn-group">
+            <form action="logout">
+                <input type="submit" value="Logout" class="logout-btn">
+            </form>
 
-    <div class="btn-group">
-        <form action="logout">
-            <input type="submit" value="Logout" class="logout-btn">
-        </form>
-
-        <form action="delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action is irreversible.');">
-            <input type="submit" value="Delete My Account" class="delete-btn">
-        </form>
+            <form action="delete" method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action is irreversible.');">
+                <input type="submit" value="Delete My Account" class="delete-btn">
+            </form>
+        </div>
     </div>
 </div>
-<%
-    } else {
-        response.sendRedirect("login.jsp");
-    }
-%>
+
+<% } else {
+    response.sendRedirect("login.jsp");
+} %>
 
 </body>
 </html>
-
