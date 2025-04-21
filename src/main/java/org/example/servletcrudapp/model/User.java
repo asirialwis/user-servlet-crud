@@ -5,9 +5,18 @@ public class User {
     private String email;
     private int mobile;
     private String password;
+    private String filePath;
 
 
-    public User(String username, String email,int mobile, String password) {
+    public User(String username, String email,int mobile, String password, String filePath) {
+        this.username = username;
+        this.email = email;
+        this.mobile = mobile;
+        this.password = password;
+        this.filePath = filePath;
+    }
+
+    public User(String username, String email, int mobile, String password) {
         this.username = username;
         this.email = email;
         this.mobile = mobile;
@@ -42,6 +51,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+    public String getFilePath() {
+        return filePath;
     }
 
 }

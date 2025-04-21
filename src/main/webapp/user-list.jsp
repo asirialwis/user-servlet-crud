@@ -86,8 +86,15 @@
     String userEmail = (String) session.getAttribute("user");
     if (userEmail != null) {
 %>
+
+<%
+    User user = (User) request.getAttribute("userData");
+    String imagePath = user.getFilePath(); // e.g., "upload/slipy3s2.jpg"
+%>
 <h2>Welcome, <%= userEmail %>!</h2>
 <div class="profile-card">
+
+    <img src="<%= imagePath %>" alt="Profile Image" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;">
     <p><strong>Username:</strong> <%= ((User) request.getAttribute("userData")).getUsername() %></p>
     <p><strong>Email:</strong> <%= ((User) request.getAttribute("userData")).getEmail() %></p>
     <p><strong>Mobile Number:</strong> <%= ((User) request.getAttribute("userData")).getMobile() %></p>

@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class userDAO {
 
-    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password) VALUES (?,?,?,?)";
+    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password,filepath) VALUES (?,?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT password FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
@@ -25,6 +25,7 @@ public class userDAO {
             preparedStatement.setString(2, user.getEmail());
             preparedStatement.setInt(3, user.getMobile());
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getFilePath());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,7 +75,8 @@ public class userDAO {
                 String username = rs.getString("username");
                 String password = rs.getString("password");
                 int mobile = rs.getInt("mobile");
-                return new User(username,email,mobile,password);
+                String filepath = rs.getString("filepath");
+                return new User(username,email,mobile,password,filepath);
             }
 
 

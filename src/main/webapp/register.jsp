@@ -131,7 +131,7 @@
 <body>
 <h2>User Registration</h2>
 
-<form name="userForm" action="adduser" method="POST" onsubmit="return validateForm()">
+<form name="userForm" action="adduser" method="POST" onsubmit="return validateForm()"  enctype="multipart/form-data">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <span class="error" id="usernameError"></span>
@@ -148,6 +148,8 @@
     <input type="password" id="password" name="password">
     <span class="error" id="passwordError"></span>
 
+    <label>Upload Image:</label>
+    <input type="file" name="image" accept="image/*" required />
     <input type="submit" value="Register">
 
     <p>Already have an account?
