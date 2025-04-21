@@ -8,6 +8,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class userDAO {
 
@@ -17,6 +19,7 @@ public class userDAO {
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
     private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=? WHERE email=?";
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE email=?";
+    private static final String GET_ALL_USER_SQL = "SELECT * FROM users";
 
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
@@ -127,5 +130,34 @@ public class userDAO {
             return false;
         }
     }
+
+
+    public List<User> getAllUsers(){
+
+        List<User> users = new ArrayList<>();
+
+        try (Connection connection = dbUtil.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_USER_SQL)) {
+
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()){
+                String username = rs.getString("username");
+                String email = rs.getString("email");
+                int mobile = rs.getInt("mobile");
+                String password = rs.getString("password");
+                String filepath = rs.getString("filepath");
+
+                users.add(new User(username,email,mobile,password,filepath));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+
+    }
+
+
 
 }

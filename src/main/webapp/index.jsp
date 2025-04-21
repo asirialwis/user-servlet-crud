@@ -18,6 +18,6 @@
 <a href="register.jsp">Register</a>
 <a href="login.jsp"> Login </a>
 <a href="profile">Profile</a>
-
+<a href="users">User List</a>
 </body>
 </html>
