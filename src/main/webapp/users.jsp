@@ -25,7 +25,7 @@
     </tr>
 
     <%
-        List<User> users = (List<User>) request.getAttribute("userList");  // Note: attribute is "userList" set in servlet
+        List<User> users = (List<User>) request.getAttribute("userList");
         if (users != null) {
             for (User user : users) {
     %>
@@ -35,7 +35,7 @@
         <td><%= user.getEmail() %></td>
         <td><%= user.getMobile() %></td>
         <td>
-            <form action="update.jsp" method="GET" style="display:inline;">
+            <form action="update" method="GET" style="display:inline;">
                 <input type="hidden" name="email" value="<%= user.getEmail() %>" />
                 <input type="submit" value="Update" />
             </form>
