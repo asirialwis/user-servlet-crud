@@ -92,6 +92,7 @@
             const email = document.forms["userForm"]["email"].value.trim();
             const mobile = document.forms["userForm"]["mobile"].value.trim();
             const password = document.forms["userForm"]["password"].value;
+            const confirmPassword = document.forms["userForm"]["confirmPassword"].value;
 
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const mobilePattern = /^[0-9]{10}$/;
@@ -103,6 +104,7 @@
             document.getElementById("emailError").innerText = "";
             document.getElementById("mobileError").innerText = "";
             document.getElementById("passwordError").innerText = "";
+            document.getElementById("confirmPasswordError").innerText = "";
 
             if (username === "") {
                 document.getElementById("usernameError").innerText = "Username is required.";
@@ -123,6 +125,10 @@
                 document.getElementById("passwordError").innerText = "Password must be at least 6 characters long.";
                 isValid = false;
             }
+            if(password && password !== confirmPassword){
+                document.getElementById("confirmPasswordError").innerText = "Password do not match!";
+                isValid = false;
+            }
 
             return isValid;
         }
@@ -133,23 +139,27 @@
 
 <form name="userForm" action="adduser" method="POST" onsubmit="return validateForm()"  enctype="multipart/form-data">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="username">
+    <input type="text" id="username" name="username" placeholder="John Doe">
     <span class="error" id="usernameError"></span>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" name="email">
+    <input type="email" id="email" name="email" placeholder="john@gmail.com">
     <span class="error" id="emailError"></span>
 
     <label for="mobile">Mobile:</label>
-    <input type="text" id="mobile" name="mobile">
+    <input type="text" id="mobile" name="mobile" placeholder="077*******">
     <span class="error" id="mobileError"></span>
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">
     <span class="error" id="passwordError"></span>
 
+    <label for="confirmPassword">Confirm New Password:</label>
+    <input type="password" id="confirmPassword" placeholder="Confirm password" />
+    <span class="error" id="confirmPasswordError"></span>
+
     <label>Upload Image:</label>
-    <input type="file" name="image" accept="image/*" required />
+    <input type="file" name="image" accept="image/*" />
     <input type="submit" value="Register">
 
     <p>Already have an account?

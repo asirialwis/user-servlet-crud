@@ -47,7 +47,7 @@
         }
 
         th {
-            background-color: #007bff;
+            background-color: #28282B;
             color: white;
         }
 
