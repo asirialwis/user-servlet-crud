@@ -110,6 +110,11 @@
                 document.getElementById("usernameError").innerText = "Username is required.";
                 isValid = false;
             }
+            if (username.length > 10 || /[0-9]/.test(username) || /[^a-zA-Z]/.test(username)) {
+                document.getElementById("usernameError").innerText = "Username must be max 15 characters and contain only letters.";
+                isValid = false;
+            }
+
 
             if (!emailPattern.test(email)) {
                 document.getElementById("emailError").innerText = "Invalid email format.";
