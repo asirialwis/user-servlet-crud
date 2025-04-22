@@ -32,7 +32,7 @@ public class UpdateServlet extends HttpServlet {
         boolean isUpdated = dao.updateUser(user);
 
         if(isUpdated){
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("users");
         }
         else{
             response.sendRedirect("update.jsp?error=updateFailed");

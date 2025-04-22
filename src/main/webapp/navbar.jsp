@@ -26,7 +26,7 @@
                     <a class="nav-link" href="users">User List</a>
                 </li>
                 <li class="nav-item">
-                    <form action="logout" method="post" class="d-inline">
+                    <form action="logout" class="d-inline">
                         <button type="submit" class="btn btn-link nav-link px-0">Logout</button>
                     </form>
                 </li>
