@@ -162,7 +162,7 @@
             <td><%= user.getMobile() %></td>
             <td>
                 <button onclick="openModal('<%= user.getUsername() %>', '<%= user.getEmail() %>', '<%= user.getMobile() %>')">Update</button>
-                <form action="delete" method="POST" onsubmit="return confirm('Are you sure?');">
+                <form action="deleteUser" method="POST" onsubmit="return confirm('Are you sure?');">
                     <input type="hidden" name="email" value="<%= user.getEmail() %>" />
                     <input type="submit" value="Delete" />
                 </form>
