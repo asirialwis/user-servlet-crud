@@ -34,11 +34,16 @@ public class AddUserServlet extends HttpServlet {
         }
 
         Part filePart = request.getPart("image");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        String imagePath = "upload/" + fileName;
 
-        filePart.write(uploadPath + File.separator + fileName);
+        String imagePath = "upload/default.png";
 
+//        filePart.write(uploadPath + File.separator + fileName);
+
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            imagePath = "upload/" + fileName;
+            filePart.write(uploadPath + File.separator + fileName);
+        }
 
         String username  = request.getParameter("username");
         String email = request.getParameter("email");
