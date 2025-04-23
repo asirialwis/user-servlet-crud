@@ -20,7 +20,6 @@ public class ProfileServlet extends HttpServlet {
         if(session != null && session.getAttribute("user") != null){
             email = (String) session.getAttribute("user");
 
-
         }
         else{
             Cookie[] cookies = request.getCookies();

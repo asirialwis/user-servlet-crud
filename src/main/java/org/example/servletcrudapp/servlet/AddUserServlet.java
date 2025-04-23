@@ -37,7 +37,7 @@ public class AddUserServlet extends HttpServlet {
 
         String imagePath = "upload/default.png";
 
-//        filePart.write(uploadPath + File.separator + fileName);
+
 
         if (filePart != null && filePart.getSize() > 0) {
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
