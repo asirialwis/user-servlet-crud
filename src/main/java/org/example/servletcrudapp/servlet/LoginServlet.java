@@ -21,12 +21,6 @@ public class LoginServlet extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", email);
 
-            //set cookie if Remember Me checked
-//            if("true".equals(remember)){
-//                Cookie cookie = new Cookie("remember", email);
-//                cookie.setMaxAge(60*60*24*7);         //7 day valid
-//                response.addCookie(cookie);
-//            }
 
             //store email in the session
             response.sendRedirect("index.jsp");   //Navigate to the home

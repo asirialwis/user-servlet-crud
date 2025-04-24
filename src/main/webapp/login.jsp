@@ -106,6 +106,7 @@
 <body>
 <h2>Login</h2>
 
+
 <form name="userForm" action="login" method="POST" onsubmit="return validateForm()">
     <label for="email">Email:</label>
     <input type="email" id="email" name="email">
@@ -113,6 +114,10 @@
 
     <label for="password">Password:</label>
     <input type="password" id="password" name="password">
+
+    <% if ("invalid".equals(request.getParameter("error"))) { %>
+    <span class="error">Invalid email or password</span>
+    <% } %>
 
     <label>
         <input type="checkbox" name="remember" value="true"> Remember Me
