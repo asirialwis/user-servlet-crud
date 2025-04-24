@@ -6,14 +6,16 @@ public class User {
     private String mobile;
     private String password;
     private byte[] image;
+    private String status;
 
 
-    public User(String username, String email,String mobile, String password, byte[] image) {
+    public User(String username, String email,String mobile, String password, byte[] image , String status) {
         this.username = username;
         this.email = email;
         this.mobile = mobile;
         this.password = password;
         this.image = image;
+        this.status = status;
     }
 
     public User(String username, String email, String mobile, String password) {
@@ -21,6 +23,14 @@ public class User {
         this.email = email;
         this.mobile = mobile;
         this.password = password;
+    }
+
+    public User(String username, String email, String mobile, String password, byte[] imageBytes) {
+        this.username = username;
+        this.email = email;
+        this.mobile = mobile;
+        this.password = password;
+        this.image = imageBytes;
     }
 
     public String getUsername() {
@@ -57,6 +67,12 @@ public class User {
     }
     public byte[] getImage() {
         return image;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }

@@ -13,8 +13,8 @@ import java.util.List;
 
 public class userDAO {
 
-    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password,image) VALUES (?,?,?,?,?)";
-    private static final String AUTH_QUERY = "SELECT password FROM users WHERE email=?";
+    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password,image,status) VALUES (?,?,?,?,?,'active')";
+    private static final String AUTH_QUERY = "SELECT password,status FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
     private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=? WHERE email=?";
@@ -63,6 +63,13 @@ public class userDAO {
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) {
                 String hashedPassword = rs.getString("password");
+                String status = rs.getString("status");
+
+                //check is the user not-active
+                if(!"active".equalsIgnoreCase(status)) {
+                    return false;
+                }
+
                 BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
                 return result.verified;
             }
@@ -86,7 +93,8 @@ public class userDAO {
                 String password = rs.getString("password");
                 String mobile = rs.getString("mobile");
                 byte[] image = rs.getBytes("image");
-                return new User(username,email,mobile,password,image);
+                String status = rs.getString("status");
+                return new User(username,email,mobile,password,image,status);
             }
 
 
@@ -154,8 +162,9 @@ public class userDAO {
                 String mobile = rs.getString("mobile");
                 String password = rs.getString("password");
                 byte[] image = rs.getBytes("image");
+                String status = rs.getString("status");
 
-                users.add(new User(username,email,mobile,password,image));
+                users.add(new User(username,email,mobile,password,image,status));
             }
         }
         catch (SQLException e) {

@@ -28,11 +28,7 @@ public class AddUserServlet extends HttpServlet {
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
 
-//        if (password == null || password.isEmpty()) {
-//            // You can either:
-//            response.sendRedirect("register.jsp?error=missingPassword");
-//            return; // Stop further execution
-//        }
+
         Part filePart = request.getPart("image");
 
         byte[] imageBytes = null;
