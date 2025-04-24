@@ -93,9 +93,17 @@
             const password = document.forms["userForm"]["password"].value;
             let isValid = true;
 
+            document.getElementById("emailError").innerText = "";
+
+
+
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if(!emailPattern.test(email)){
                 document.getElementById("emailError").innerText = "Invalid email Format";
+                isValid = false;
+            }
+            if(email === "" || password === ""){
+                document.getElementById("emailError").innerText = "please end valid email password"
                 isValid = false;
             }
             return isValid;
@@ -119,9 +127,7 @@
     <span class="error">Invalid email or password</span>
     <% } %>
 
-    <label>
-        <input type="checkbox" name="remember" value="true"> Remember Me
-    </label>
+
 
     <br><br>
     <input type="submit" value="Login">
