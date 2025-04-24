@@ -87,12 +87,84 @@
     </style>
 
     <script>
+        window.onload = function () {
+            const form = document.forms["userForm"];
+            const usernameInput = form["username"];
+            const emailInput = form["email"];
+            const mobileInput = form["mobile"];
+            const passwordInput = form["password"];
+            const confirmPasswordInput = document.getElementById("confirmPassword");
+
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const mobilePattern = /^[0-9]{10}$/;
+
+            usernameInput.addEventListener("input", () => {
+                const username = usernameInput.value.trim();
+                if (username === "") {
+                    setError("usernameError", "Username is required.");
+                } else if (username.length > 15 || /[^a-zA-Z]/.test(username)) {
+                    setError("usernameError", "Username must be max 15 characters and contain only letters.");
+                } else {
+                    clearError("usernameError");
+                }
+            });
+
+            emailInput.addEventListener("input", () => {
+                const email = emailInput.value.trim();
+                if (!emailPattern.test(email)) {
+                    setError("emailError", "Invalid email format.");
+                } else {
+                    clearError("emailError");
+                }
+            });
+
+            mobileInput.addEventListener("input", () => {
+                const mobile = mobileInput.value.trim();
+                if (!mobilePattern.test(mobile)) {
+                    setError("mobileError", "Mobile number must be exactly 10 digits.");
+                } else {
+                    clearError("mobileError");
+                }
+            });
+
+            passwordInput.addEventListener("input", () => {
+                const password = passwordInput.value;
+                if (password.length < 6) {
+                    setError("passwordError", "Password must be at least 6 characters long.");
+                } else {
+                    clearError("passwordError");
+                }
+                validateConfirmPassword();
+            });
+
+            confirmPasswordInput.addEventListener("input", validateConfirmPassword);
+
+            function validateConfirmPassword() {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+                if (password && confirmPassword && password !== confirmPassword) {
+                    setError("confirmPasswordError", "Password do not match!");
+                } else {
+                    clearError("confirmPasswordError");
+                }
+            }
+
+            function setError(id, message) {
+                document.getElementById(id).innerText = message;
+            }
+
+            function clearError(id) {
+                document.getElementById(id).innerText = "";
+            }
+        };
+
         function validateForm() {
+
             const username = document.forms["userForm"]["username"].value.trim();
             const email = document.forms["userForm"]["email"].value.trim();
             const mobile = document.forms["userForm"]["mobile"].value.trim();
             const password = document.forms["userForm"]["password"].value;
-            const confirmPassword = document.forms["userForm"]["confirmPassword"].value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
 
             const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             const mobilePattern = /^[0-9]{10}$/;
@@ -107,41 +179,41 @@
             document.getElementById("confirmPasswordError").innerText = "";
 
             if (username === "") {
-                document.getElementById("usernameError").innerText = "Username is required.";
+                setError("usernameError", "Username is required.");
+                isValid = false;
+            } else if (username.length > 15 || /[^a-zA-Z]/.test(username)) {
+                setError("usernameError", "Username must be max 15 characters and contain only letters.");
                 isValid = false;
             }
-            if (username.length > 10 || /[0-9]/.test(username) || /[^a-zA-Z]/.test(username)) {
-                document.getElementById("usernameError").innerText = "Username must be max 15 characters and contain only letters.";
-                isValid = false;
-            }
-
 
             if (!emailPattern.test(email)) {
-                document.getElementById("emailError").innerText = "Invalid email format.";
+                setError("emailError", "Invalid email format.");
                 isValid = false;
             }
-
 
             if (!mobilePattern.test(mobile)) {
-                document.getElementById("mobileError").innerText = "Mobile number must be exactly 10 digits.";
+                setError("mobileError", "Mobile number must be exactly 10 digits.");
                 isValid = false;
-            } else {
-                document.getElementById("mobileError").innerText = "";
             }
-
 
             if (password.length < 6) {
-                document.getElementById("passwordError").innerText = "Password must be at least 6 characters long.";
+                setError("passwordError", "Password must be at least 6 characters long.");
                 isValid = false;
             }
-            if(password && password !== confirmPassword){
-                document.getElementById("confirmPasswordError").innerText = "Password do not match!";
+
+            if (password && password !== confirmPassword) {
+                setError("confirmPasswordError", "Password do not match!");
                 isValid = false;
             }
 
             return isValid;
+
+            function setError(id, message) {
+                document.getElementById(id).innerText = message;
+            }
         }
     </script>
+
 </head>
 <body>
 <h2>User Registration</h2>

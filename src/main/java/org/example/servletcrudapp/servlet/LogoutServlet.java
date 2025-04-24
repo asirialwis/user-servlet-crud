@@ -14,9 +14,6 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
 
-//        Cookie cookie = new Cookie("remember", "");
-//        cookie.setMaxAge(0); //Delete it
-//        response.addCookie(cookie);
 
         response.sendRedirect("login.jsp");
     }
