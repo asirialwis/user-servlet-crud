@@ -15,7 +15,7 @@ public class UpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String email = request.getParameter("email");
-        int mobile = Integer.parseInt(request.getParameter("mobile"));
+        String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
 
 

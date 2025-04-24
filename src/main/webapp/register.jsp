@@ -120,11 +120,11 @@
                 document.getElementById("emailError").innerText = "Invalid email format.";
                 isValid = false;
             }
-
-            if (!mobilePattern.test(mobile)) {
-                document.getElementById("mobileError").innerText = "Mobile number must be exactly 10 digits.";
-                isValid = false;
-            }
+            //
+            // if (!mobilePattern.test(mobile)) {
+            //     document.getElementById("mobileError").innerText = "Mobile number must be exactly 10 digits.";
+            //     isValid = false;
+            // }
 
             if (password.length < 6) {
                 document.getElementById("passwordError").innerText = "Password must be at least 6 characters long.";

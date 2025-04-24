@@ -9,6 +9,8 @@
 <%@ page import="org.example.servletcrudapp.model.User" %>
 <%@ include file="navbar.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.Base64" %>
+
 <html>
 <head>
     <title>User List</title>
@@ -155,8 +157,19 @@
             if (users != null) {
                 for (User user : users) {
         %>
+        <%
+            String base64Image = "";
+            byte[] imageBytes = user.getImage();
+            if (imageBytes != null && imageBytes.length > 0) {
+                base64Image = Base64.getEncoder().encodeToString(imageBytes);
+            }
+        %>
+
+
         <tr>
-             <td><img src="<%= user.getFilePath() %>" width="80" height="80"/></td>
+            <td>
+                <img src="<%= base64Image.isEmpty() ? "upload/default.png" : "data:image/jpeg;base64," + base64Image %>" width="80" height="80" />
+            </td>
             <td><%= user.getUsername() %></td>
             <td><%= user.getEmail() %></td>
             <td><%= user.getMobile() %></td>

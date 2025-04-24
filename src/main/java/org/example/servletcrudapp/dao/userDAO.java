@@ -13,7 +13,7 @@ import java.util.List;
 
 public class userDAO {
 
-    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password,filepath) VALUES (?,?,?,?,?)";
+    private static final String INSERT_USER_SQL = "INSERT INTO users (username,email,mobile,password,image) VALUES (?,?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT password FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
@@ -26,9 +26,16 @@ public class userDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getEmail());
-            preparedStatement.setInt(3, user.getMobile());
+            preparedStatement.setString(3, user.getMobile());
             preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, user.getFilePath());
+
+            if(user.getImage() != null){
+                preparedStatement.setBytes(5, user.getImage());
+            }
+            else{
+                preparedStatement.setNull(5, java.sql.Types.BLOB);
+            }
+
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,9 +84,9 @@ public class userDAO {
             if(rs.next()){
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                int mobile = rs.getInt("mobile");
-                String filepath = rs.getString("filepath");
-                return new User(username,email,mobile,password,filepath);
+                String mobile = rs.getString("mobile");
+                byte[] image = rs.getBytes("image");
+                return new User(username,email,mobile,password,image);
             }
 
 
@@ -101,7 +108,7 @@ public class userDAO {
             }
 
             preparedStatement.setString(1, user.getUsername());
-            preparedStatement.setInt(2, user.getMobile());
+            preparedStatement.setString(2, user.getMobile());
             preparedStatement.setString(3, password);
             preparedStatement.setString(4, user.getEmail());
 
@@ -144,11 +151,11 @@ public class userDAO {
             while(rs.next()){
                 String username = rs.getString("username");
                 String email = rs.getString("email");
-                int mobile = rs.getInt("mobile");
+                String mobile = rs.getString("mobile");
                 String password = rs.getString("password");
-                String filepath = rs.getString("filepath");
+                byte[] image = rs.getBytes("image");
 
-                users.add(new User(username,email,mobile,password,filepath));
+                users.add(new User(username,email,mobile,password,image));
             }
         }
         catch (SQLException e) {

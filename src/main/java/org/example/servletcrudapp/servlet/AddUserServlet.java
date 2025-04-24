@@ -17,42 +17,32 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 @WebServlet("/adduser")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024,  // 1MB
-        maxFileSize = 1024 * 1024 * 5,    // 5MB
-        maxRequestSize = 1024 * 1024 * 10)
+@MultipartConfig
 public class AddUserServlet extends HttpServlet {
     private final userDAO dao = new userDAO();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        String uploadPath = request.getServletContext().getRealPath("")+ File.separator+"upload";
-        File newFile = new File(uploadPath);
-
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
-        }
-
-        Part filePart = request.getPart("image");
-
-        String imagePath = "upload/default.png";
-
-
-
-        if (filePart != null && filePart.getSize() > 0) {
-            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-            imagePath = "upload/" + fileName;
-            filePart.write(uploadPath + File.separator + fileName);
-        }
-
         String username  = request.getParameter("username");
         String email = request.getParameter("email");
-        int mobile = Integer.parseInt(request.getParameter("mobile"));
+        String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
+
+//        if (password == null || password.isEmpty()) {
+//            // You can either:
+//            response.sendRedirect("register.jsp?error=missingPassword");
+//            return; // Stop further execution
+//        }
+        Part filePart = request.getPart("image");
+
+        byte[] imageBytes = null;
+        if (filePart != null && filePart.getSize() > 0) {
+            imageBytes = filePart.getInputStream().readAllBytes();
+        }
 
         String hashedPassword = BCrypt.withDefaults().hashToString(12, password.toCharArray());
 
-        User user = new User(username,email,mobile,hashedPassword,imagePath);
+        User user = new User(username,email,mobile,hashedPassword,imageBytes);
 
         //Check the email exists in users table
         if(dao.emailExists(email)){

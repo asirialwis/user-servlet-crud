@@ -1,4 +1,5 @@
 <%@ page import="org.example.servletcrudapp.model.User" %>
+<%@ page import="java.util.Base64" %>
 <%@ include file="navbar.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -93,12 +94,20 @@
     String userEmail = (String) session.getAttribute("user");
     if (userEmail != null) {
         User user = (User) request.getAttribute("userData");
-        String imagePath = user.getFilePath();
+
+        String base64Image = "";
+        byte[] imageBytes = user.getImage();
+
+        if (imageBytes != null && imageBytes.length > 0) {
+            base64Image = Base64.getEncoder().encodeToString(imageBytes);
+        } else {
+            base64Image = "default.png"; //
+        }
 %>
 
 <div class="dashboard-container">
     <div class="profile-card">
-        <img src="<%= imagePath %>" alt="Profile Image">
+        <img src="<%= imageBytes != null && imageBytes.length > 0 ? "data:image/jpeg;base64," + base64Image : "upload/default.png" %>" alt="Profile Image">
         <h2><%= user.getUsername() %></h2>
         <p><strong>Email:</strong> <%= user.getEmail() %></p>
         <p><strong>Mobile Number:</strong> <%= user.getMobile() %></p>

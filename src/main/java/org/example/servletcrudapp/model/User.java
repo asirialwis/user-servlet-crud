@@ -3,20 +3,20 @@ package org.example.servletcrudapp.model;
 public class User {
     private String username;
     private String email;
-    private int mobile;
+    private String mobile;
     private String password;
-    private String filePath;
+    private byte[] image;
 
 
-    public User(String username, String email,int mobile, String password, String filePath) {
+    public User(String username, String email,String mobile, String password, byte[] image) {
         this.username = username;
         this.email = email;
         this.mobile = mobile;
         this.password = password;
-        this.filePath = filePath;
+        this.image = image;
     }
 
-    public User(String username, String email, int mobile, String password) {
+    public User(String username, String email, String mobile, String password) {
         this.username = username;
         this.email = email;
         this.mobile = mobile;
@@ -31,10 +31,10 @@ public class User {
         this.username = username;
     }
 
-    public int getMobile() {
+    public String getMobile() {
         return mobile;
     }
-    public void setMobile(int mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
@@ -52,11 +52,11 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
-    public String getFilePath() {
-        return filePath;
+    public byte[] getImage() {
+        return image;
     }
 
 }
