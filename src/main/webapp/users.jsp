@@ -150,6 +150,7 @@
             <th>Username</th>
             <th>Email</th>
             <th>Mobile</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
         <%
@@ -173,8 +174,10 @@
             <td><%= user.getUsername() %></td>
             <td><%= user.getEmail() %></td>
             <td><%= user.getMobile() %></td>
+            <td><%= user.getStatus() %></td>
+
             <td>
-                <button onclick="openModal('<%= user.getUsername() %>', '<%= user.getEmail() %>', '<%= user.getMobile() %>')">Update</button>
+                <button onclick="openModal('<%= user.getUsername() %>', '<%= user.getEmail() %>', '<%= user.getMobile() %>' , '<%= user.getStatus()%>')">Update</button>
                 <form action="deleteUser" method="POST" onsubmit="return confirm('Are you sure?');">
                     <input type="hidden" name="email" value="<%= user.getEmail() %>" />
                     <input type="submit" value="Delete" />
@@ -203,16 +206,23 @@
             <label for="modalMobile">Mobile:</label>
             <input type="text" name="mobile" id="modalMobile" required />
 
+            <label for="modalStatus">Status:</label>
+            <select name="status" id="modalStatus" required>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+            </select>
+
             <input type="submit" value="Update" />
         </form>
     </div>
 </div>
 
 <script>
-    function openModal(username, email, mobile) {
+    function openModal(username, email, mobile, status) {
         document.getElementById('modalUsername').value = username;
         document.getElementById('modalEmail').value = email;
         document.getElementById('modalMobile').value = mobile;
+        document.getElementById('modalStatus').value = status;
         document.getElementById('updateModal').style.display = 'block';
     }
 

@@ -32,6 +32,13 @@ public class User {
         this.password = password;
         this.image = imageBytes;
     }
+    public User(String username, String email,String mobile, String password, String status) {
+        this.username = username;
+        this.email = email;
+        this.mobile = mobile;
+        this.password = password;
+        this.status = status;
+    }
 
     public String getUsername() {
         return username;

@@ -17,7 +17,9 @@ public class UpdateServlet extends HttpServlet {
         String email = request.getParameter("email");
         String mobile = request.getParameter("mobile");
         String password = request.getParameter("password");
+        String status = request.getParameter("status");
 
+        System.out.println(status);
 
         if (password == null || password.isEmpty()) {
             // Retrieve current password from DB
@@ -25,11 +27,11 @@ public class UpdateServlet extends HttpServlet {
             password = existingUser.getPassword();
         }
 
-
-
-        User user = new User(username,email,mobile,password);
+        User user = new User(username,email,mobile,password, status);
 
         boolean isUpdated = dao.updateUser(user);
+
+        System.out.println(isUpdated);
 
         if(isUpdated){
             response.sendRedirect("users");

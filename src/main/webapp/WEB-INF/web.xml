@@ -5,9 +5,9 @@
          version="6.0">
 
 
-    <welcome-file-list>
-        <welcome-file>test.jsp</welcome-file>
-    </welcome-file-list>
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>test.jsp</welcome-file>-->
+<!--    </welcome-file-list>-->
 
 </web-app>
 

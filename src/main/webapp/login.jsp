@@ -124,7 +124,7 @@
     <input type="password" id="password" name="password">
 
     <% if ("invalid".equals(request.getParameter("error"))) { %>
-    <span class="error">Invalid email or password</span>
+    <span class="error">Invalid credentials or access denied</span>
     <% } %>
 
 

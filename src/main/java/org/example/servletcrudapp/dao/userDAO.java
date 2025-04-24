@@ -17,7 +17,7 @@ public class userDAO {
     private static final String AUTH_QUERY = "SELECT password,status FROM users WHERE email=?";
     private static final String GET_USER_SQL = "SELECT * FROM users WHERE email=?";
     private static final String CHECK_EMAIL_SQL = "SELECT 1 FROM users WHERE email=?";
-    private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=? WHERE email=?";
+    private static final String UPDATE_USER_SQL = "UPDATE users SET username=?, mobile=?, password=?,status=? WHERE email=?";
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE email=?";
     private static final String GET_ALL_USER_SQL = "SELECT * FROM users";
 
@@ -118,7 +118,10 @@ public class userDAO {
             preparedStatement.setString(1, user.getUsername());
             preparedStatement.setString(2, user.getMobile());
             preparedStatement.setString(3, password);
-            preparedStatement.setString(4, user.getEmail());
+            preparedStatement.setString(4,user.getStatus());
+            preparedStatement.setString(5, user.getEmail());
+
+
 
             int rowsUpdated = preparedStatement.executeUpdate();
 
