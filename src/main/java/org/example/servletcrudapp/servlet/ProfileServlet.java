@@ -21,20 +21,20 @@ public class ProfileServlet extends HttpServlet {
             email = (String) session.getAttribute("user");
 
         }
-        else{
-            Cookie[] cookies = request.getCookies();
-            if(cookies != null){
-                for(Cookie cookie : cookies){
-                    if("remember".equals(cookie.getName())){
-                        email = cookie.getValue();
-
-                        session = request.getSession();
-                        session.setAttribute("user",email);
-                        break;
-                    }
-                }
-            }
-        }
+//        else{
+//            Cookie[] cookies = request.getCookies();
+//            if(cookies != null){
+//                for(Cookie cookie : cookies){
+//                    if("remember".equals(cookie.getName())){
+//                        email = cookie.getValue();
+//
+//                        session = request.getSession();
+//                        session.setAttribute("user",email);
+//                        break;
+//                    }
+//                }
+//            }
+//        }
         //load user data or re-direct
         if(email != null){
             User user = dao.getUserByEmail(email);
