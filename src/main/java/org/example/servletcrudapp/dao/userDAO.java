@@ -21,6 +21,7 @@ public class userDAO {
     private static final String DELETE_USER_SQL = "DELETE FROM users WHERE email=?";
     private static final String GET_ALL_USER_SQL = "SELECT * FROM users";
 
+    //register specific user
     public void insertUser(User user) {
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER_SQL)) {
@@ -41,6 +42,8 @@ public class userDAO {
             e.printStackTrace();
         }
     }
+
+    //check users email exists
     public boolean emailExists(String email)  {
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(CHECK_EMAIL_SQL)){
@@ -54,6 +57,7 @@ public class userDAO {
         }
     }
 
+    //authenticate and check users access status
     public boolean authenticateUser(String email, String password) {
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(AUTH_QUERY)) {
@@ -80,6 +84,7 @@ public class userDAO {
         return false;
     }
 
+    //get specific user data for profile
     public User getUserByEmail(String email){
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_USER_SQL)) {
@@ -104,6 +109,7 @@ public class userDAO {
         return null;
     }
 
+    //update specific user
     public boolean updateUser(User user) {
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_SQL)) {
