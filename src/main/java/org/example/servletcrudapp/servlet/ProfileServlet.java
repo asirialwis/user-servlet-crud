@@ -27,7 +27,7 @@ public class ProfileServlet extends HttpServlet {
             User user = dao.getUserByEmail(email);
 
             request.setAttribute("userData", user);
-            request.getRequestDispatcher("user-list.jsp").forward(request,response);
+            request.getRequestDispatcher("profile.jsp").forward(request,response);
         }
         else{
             response.sendRedirect("login.jsp");
