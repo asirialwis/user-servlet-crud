@@ -57,31 +57,49 @@ public class userDAO {
         }
     }
 
-    //authenticate and check users access status
-    public boolean authenticateUser(String email, String password) {
+    /**
+     * Authenticates the user and checks their account status.
+     * @param email The user's email.
+     * @param password The user's plain-text password.
+     * @return A String indicating the authentication result: "success", "inactive", or "failure".
+     */
+    public String authenticateUser(String email, String password) {
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(AUTH_QUERY)) {
 
             preparedStatement.setString(1, email);
 
             ResultSet rs = preparedStatement.executeQuery();
-            if(rs.next()) {
-                String hashedPassword = rs.getString("password");
-                String status = rs.getString("status");
 
-                //check is the user not-active
-                if(!"active".equalsIgnoreCase(status)) {
-                    return false;
+            // 1. Check if the email exists in the database
+            if (!rs.next()) {
+                return "failure"; // Email not found (Invalid Credentials)
+            }
+
+            String hashedPassword = rs.getString("password");
+            String status = rs.getString("status");
+
+            // 2. Verify the password
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
+
+            if (result.verified) {
+                // Password verified successfully, now check status
+
+                // 3. Check for active status
+                if (!"active".equalsIgnoreCase(status)) {
+                    return "inactive"; // Account verified but access denied
+                } else {
+                    return "success"; // Fully authenticated and active
                 }
-
-                BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), hashedPassword);
-                return result.verified;
+            } else {
+                return "failure"; // Password mismatch (Invalid Credentials)
             }
 
         } catch (SQLException e) {
+            // Log the exception, but return failure to the user
             e.printStackTrace();
+            return "failure";
         }
-        return false;
     }
 
     //get specific user data for profile

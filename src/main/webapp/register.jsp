@@ -1,92 +1,160 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Asiri
-  Date: 4/11/2025
-  Time: 2:42 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    // Check for registration success/error messages passed from the Servlet
+    String success = request.getParameter("success");
+    String regError = request.getParameter("error");
+%>
 <html>
 <head>
     <title>Register User</title>
     <style>
+        /* CSS Variables matching the Login Page */
+        :root {
+            --primary-color: #007bff; /* Standard Blue */
+            --primary-hover: #0056b3;
+            --background-color: #e9ecef;
+            --card-bg: #ffffff;
+            --text-color: #343a40;
+            --error-color: #dc3545;
+            --success-color: #28a745; /* Green for success messages */
+            --border-radius: 8px;
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding-top: 50px;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
         }
 
-        h2 {
-            color: #333;
+        .register-card {
+            width: 100%;
+            max-width: 450px; /* Slightly wider card for more input fields */
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .register-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+        }
+
+        /* Form element styling */
+        .form-group {
             margin-bottom: 20px;
+            text-align: left;
         }
 
-        form {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
-        }
-
-        label {
+        .form-group label {
             display: block;
-            margin-bottom: 5px;
-            color: #444;
+            margin-bottom: 8px;
+            font-weight: 600;
         }
 
         input[type="text"],
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+            margin-bottom: 0px; /* Removed margin-bottom here to manage spacing with error spans */
         }
 
-        .error {
-            color: red;
-            font-size: 13px;
-            margin-bottom: 10px;
-            display: block;
+        input[type="file"] {
+            width: 100%;
+            padding: 8px 0;
+            box-sizing: border-box;
         }
 
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+        }
+
+        /* Submit Button */
         input[type="submit"] {
-            background-color: #007BFF;
+            background-color: var(--primary-color);
             color: white;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
             border: none;
-            border-radius: 5px;
+            border-radius: 4px;
             cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
 
         input[type="submit"]:hover {
-            background-color: #0056b3;
+            background-color: var(--primary-hover);
         }
 
-        p {
-            margin-top: 15px;
-            text-align: center;
+        /* Message Styling */
+        .error-message, .success-message {
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: left;
+            display: block;
+            font-weight: 500;
         }
 
-        a {
-            color: #007BFF;
+        .error-message {
+            color: var(--error-color);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            background-color: rgba(220, 53, 69, 0.05);
+        }
+
+        .success-message {
+            color: var(--success-color);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            background-color: rgba(40, 167, 69, 0.05);
+        }
+
+        .error { /* For client-side validation errors */
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            margin-bottom: 10px; /* Added spacing after error */
+            display: block;
+            text-align: left;
+        }
+
+        .login-link {
+            margin-top: 25px;
+            font-size: 0.95rem;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
     </style>
 
     <script>
+        // --- Your existing JavaScript logic remains here ---
         window.onload = function () {
             const form = document.forms["userForm"];
             const usernameInput = form["username"];
@@ -159,7 +227,7 @@
         };
 
         function validateForm() {
-
+            // --- Your existing validateForm function remains here ---
             const username = document.forms["userForm"]["username"].value.trim();
             const email = document.forms["userForm"]["email"].value.trim();
             const mobile = document.forms["userForm"]["mobile"].value.trim();
@@ -213,41 +281,65 @@
             }
         }
     </script>
-
 </head>
 <body>
-<h2>User Registration</h2>
 
-<form name="userForm" action="adduser" method="POST" onsubmit="return validateForm()"  enctype="multipart/form-data">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" placeholder="John Doe">
-    <span class="error" id="usernameError"></span>
+<div class="register-card">
+    <h2><span style="color: #6c757d;">New User</span> Registration</h2>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="john@gmail.com">
-    <span class="error" id="emailError"></span>
+    <% if ("success".equals(success)) { %>
+    <span class="success-message">
+            **Registration Successful!** You can now log in.
+        </span>
+    <% } else if (regError != null) { %>
+    <span class="error-message">
+            **Registration Failed:** <%= regError %>
+        </span>
+    <% } %>
 
-    <label for="mobile">Mobile:</label>
-    <input type="text" id="mobile" name="mobile" placeholder="077*******">
-    <span class="error" id="mobileError"></span>
+    <form name="userForm" action="adduser" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password">
-    <span class="error" id="passwordError"></span>
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="John Doe">
+            <span class="error" id="usernameError"></span>
+        </div>
 
-    <label for="confirmPassword">Confirm New Password:</label>
-    <input type="password" id="confirmPassword" placeholder="Confirm password" />
-    <span class="error" id="confirmPasswordError"></span>
+        <div class="form-group">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" placeholder="john@example.com">
+            <span class="error" id="emailError"></span>
+        </div>
 
-    <label>Upload Image:</label>
-    <input type="file" name="image" accept="image/*" />
-    <input type="submit" value="Register">
+        <div class="form-group">
+            <label for="mobile">Mobile Number:</label>
+            <input type="text" id="mobile" name="mobile" placeholder="077xxxxxxx">
+            <span class="error" id="mobileError"></span>
+        </div>
 
-    <p>Already have an account?
-        <a href="login.jsp">Login</a>
-    </p>
-</form>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="••••••••">
+            <span class="error" id="passwordError"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" placeholder="Confirm password" />
+            <span class="error" id="confirmPasswordError"></span>
+        </div>
+
+        <div class="form-group">
+            <label>Profile Image (Optional):</label>
+            <input type="file" name="image" accept="image/*" />
+        </div>
+
+        <input type="submit" value="Register">
+
+        <p class="login-link">Already have an account?
+            <a href="login.jsp">Login</a>
+        </p>
+    </form>
+</div>
 </body>
 </html>
-
-

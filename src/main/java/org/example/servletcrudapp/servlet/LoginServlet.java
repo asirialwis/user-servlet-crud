@@ -15,8 +15,8 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        boolean isAuthenticated = dao.authenticateUser(email , password);
-        if (isAuthenticated) {
+        String result = dao.authenticateUser(email , password);
+        if (result.equals("success")) {
             HttpSession session = request.getSession();
             session.setAttribute("user", email);
 
@@ -24,8 +24,11 @@ public class LoginServlet extends HttpServlet {
             //store email in the session
             response.sendRedirect("index.jsp");   //Navigate to the home
         }
+        else if(result.equals("inactive")) {
+            response.sendRedirect("login.jsp?error=denied");
+        }
         else{
-            response.sendRedirect("login.jsp?error=invalid");
+            response.sendRedirect("login.jsp?error=credentials");
         }
 
     }
